@@ -2,7 +2,7 @@
 
 # Setup requirement:
 - Java 21
-- Min Android Studio to use is Android Studio Koala that support gradle AGP 8.6.1
+- Min Android Studio to use is Android Studio Meerkat that support gradle AGP 8.10.1
 - To run this project,it will need a valid web client id (to add to local.properties file) and google-services.json downloaded from firebase after adding SHA key.
 
 

@@ -4,13 +4,15 @@ android-compileSdk = "35"
 android-minSdk = "28"
 android-targetSdk = "34"
 
+jvm = "21"
+
 
 activityCompose = "1.9.3"
 androidxAppcompat = "1.7.0"
 androidxComposeBom = "2024.12.01"
 androidxCoreKtx = "1.15.0"
 androidxConstraintLayoutCompose = "1.1.0"
-gradle = "8.6.1"
+gradle = "8.10.1"
 kotlin = "2.0.21"
 koinVersion = "4.0.1"
 koinCompose = "4.0.1"

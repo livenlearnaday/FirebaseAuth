@@ -52,22 +52,15 @@ android {
         }
     }
 
-
-
-
-
-
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.jvm.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.jvm.get())
     }
+
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = libs.versions.jvm.get()
     }
-    kotlin {
-        jvmToolchain(21)
-    }
+
     buildFeatures {
         buildConfig = true
         compose = true
@@ -78,13 +71,12 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
     testOptions {
         packaging {
             resources.excludes.add("META-INF/*")
         }
     }
-
-
 
 }
 
