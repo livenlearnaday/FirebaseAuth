@@ -31,7 +31,6 @@ fun CustomImage(
     placeHolderImageResource: Int,
     borderColor: Color = Color.White
 ) {
-
     if (imageUrlString.isNotEmpty()) {
         AsyncImage(
             modifier = modifier
@@ -40,19 +39,18 @@ fun CustomImage(
                     shape = RoundedCornerShape(16.dp),
                     border = BorderStroke(
                         width = 1.dp,
-                        color = borderColor,
+                        color = borderColor
                     )
                 ),
             model = ImageRequest.Builder(LocalContext.current)
-                    .decoderFactory(SvgDecoder.Factory())
-                    .memoryCachePolicy(CachePolicy.ENABLED)
-                    .crossfade(true)
-                    .data( imageUrlString)
-                    .build(),
+                .decoderFactory(SvgDecoder.Factory())
+                .memoryCachePolicy(CachePolicy.ENABLED)
+                .crossfade(true)
+                .data(imageUrlString)
+                .build(),
             contentDescription = stringResource(R.string.profile_image),
             fallback = painterResource(placeHolderImageResource)
         )
-
     } else {
         Image(
             modifier = modifier
@@ -61,17 +59,15 @@ fun CustomImage(
                     shape = RoundedCornerShape(16.dp),
                     border = BorderStroke(
                         width = 1.dp,
-                        color = borderColor,
+                        color = borderColor
                     )
                 ),
             painter = painterResource(placeHolderImageResource),
             contentDescription = stringResource(R.string.profile_image),
             contentScale = ContentScale.Inside
-            )
+        )
     }
-
 }
-
 
 @Composable
 @Preview(showBackground = true)

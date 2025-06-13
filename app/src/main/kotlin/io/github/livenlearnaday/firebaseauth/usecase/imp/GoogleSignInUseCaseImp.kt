@@ -7,9 +7,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.GoogleSignInUseCase
 import io.github.livenlearnaday.firebaseauth.util.Response
 
 class GoogleSignInUseCaseImp(
-private val authRepository: AuthRepository
-): GoogleSignInUseCase {
-    override suspend fun execute(credential: Credential): Response<AuthResult> {
-        return authRepository.signInWithGoogle(credential)
-    }
+    private val authRepository: AuthRepository
+) : GoogleSignInUseCase {
+    override suspend fun execute(credential: Credential): Response<AuthResult> = authRepository.signInWithGoogle(credential)
 }

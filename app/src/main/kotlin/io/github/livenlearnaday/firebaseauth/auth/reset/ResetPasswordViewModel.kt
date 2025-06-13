@@ -20,7 +20,7 @@ class ResetPasswordViewModel(
         private set
 
     fun resetPasswordAction(resetPasswordAction: ResetPasswordAction) {
-        when(resetPasswordAction) {
+        when (resetPasswordAction) {
             ResetPasswordAction.OnPasswordResetClicked -> {
                 resetPassword()
             }
@@ -37,13 +37,14 @@ class ResetPasswordViewModel(
             val resetPasswordResult = resetPasswordUseCase
                 .execute(resetPasswordState.email.text.toString().trim())
 
-            when(resetPasswordResult) {
+            when (resetPasswordResult) {
                 is Response.Success -> {
                     resetPasswordState = resetPasswordState.copy(
                         isResetPasswordSuccess = true,
                         message = "Reset successful, Plese check you email for further instruction."
                     )
                 }
+
                 is Response.Failure -> {
                     resetPasswordState = resetPasswordState.copy(
                         isResetPasswordSuccess = false

@@ -6,9 +6,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.DeleteUserAccountUseCase
 import io.github.livenlearnaday.firebaseauth.util.Response
 
 class DeleteUserAccountUseCaseImp(
-private val authRepository: AuthRepository
-): DeleteUserAccountUseCase {
-    override suspend fun execute(credential: Credential?): Response<Boolean> {
-        return authRepository.deleteUserAccount(credential)
-    }
+    private val authRepository: AuthRepository
+) : DeleteUserAccountUseCase {
+    override suspend fun execute(credential: Credential?): Response<Boolean> = authRepository.deleteUserAccount(credential)
 }

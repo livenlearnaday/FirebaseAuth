@@ -32,5 +32,4 @@ interface AuthRepository {
     suspend fun loginWithEmailAndPassword(authRequestModel: AuthRequestModel): Response<Boolean>
 
     suspend fun signUpWithEmailAndPassword(authRequestModel: AuthRequestModel): Response<Boolean>
-
 }

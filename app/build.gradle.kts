@@ -38,7 +38,9 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "AUTH_WEB_CLIENT_ID",
+        buildConfigField(
+            "String",
+            "AUTH_WEB_CLIENT_ID",
             "${properties["AUTH_WEB_CLIENT_ID"]}"
         )
     }
@@ -97,7 +99,6 @@ android {
             resources.excludes.add("META-INF/*")
         }
     }
-
 }
 
 dependencies {
@@ -148,5 +149,4 @@ dependencies {
 
     testImplementation(libs.mockk)
     androidTestImplementation(libs.mockk.android)
-
 }

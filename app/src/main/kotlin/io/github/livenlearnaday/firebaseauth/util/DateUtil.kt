@@ -1,8 +1,8 @@
 package io.github.livenlearnaday.firebaseauth.util
 
-import timber.log.Timber
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
+import timber.log.Timber
 
 //time difference is +17353 , +17742 or about 17 seconds, added about 17.5s, firebase timestamp is faster than time from IDE
 fun Long.isWithinPast(minutes: Int): Boolean {

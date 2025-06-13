@@ -5,9 +5,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.SignOutUseCase
 import io.github.livenlearnaday.firebaseauth.util.Response
 
 class SignOutUseCaseImp(
-private val authRepository: AuthRepository
-): SignOutUseCase {
-    override suspend fun execute(): Response<Boolean> {
-        return authRepository.signOut()
-    }
+    private val authRepository: AuthRepository
+) : SignOutUseCase {
+    override suspend fun execute(): Response<Boolean> = authRepository.signOut()
 }

@@ -38,7 +38,6 @@ import io.github.livenlearnaday.firebaseauth.ui.theme.FirebaseauthTheme
 import io.github.livenlearnaday.firebaseauth.ui.theme.LighterGrey
 import io.github.livenlearnaday.firebaseauth.ui.theme.PurpleGrey80
 
-
 @Composable
 fun EmailTextField(
     state: TextFieldState,
@@ -93,8 +92,9 @@ fun EmailTextField(
                 Box(
                     modifier = Modifier.weight(1f)
                 ) {
-                    if(state.text.isBlank() && !isFocused) {
-                        Text(text = hint,
+                    if (state.text.isBlank() && !isFocused) {
+                        Text(
+                            text = hint,
                             color = Color.Black.copy(alpha = 0.6f),
                             modifier = Modifier.fillMaxWidth()
                         )
@@ -108,7 +108,8 @@ fun EmailTextField(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-@Preview(showBackground = true,
+@Preview(
+    showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
 )
 fun PreviewTextField() {
@@ -117,6 +118,7 @@ fun PreviewTextField() {
             state = rememberTextFieldState(),
             hint = "Email",
             keyboardType = KeyboardType.Email,
-            modifier = Modifier.fillMaxWidth())
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }

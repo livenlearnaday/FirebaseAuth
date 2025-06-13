@@ -5,9 +5,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.ResetPasswordUseCase
 import io.github.livenlearnaday.firebaseauth.util.Response
 
 class ResetPasswordUseCaseImp(
-private val authRepository: AuthRepository
-): ResetPasswordUseCase {
-    override suspend fun execute(email: String): Response<Boolean> {
-        return authRepository.resetPassword(email)
-    }
+    private val authRepository: AuthRepository
+) : ResetPasswordUseCase {
+    override suspend fun execute(email: String): Response<Boolean> = authRepository.resetPassword(email)
 }

@@ -21,7 +21,6 @@ class HomeScreenTest {
     private val email = "test@email.com"
     private var mockUser: FirebaseUser = mockk<FirebaseUser>()
 
-
     @Test
     fun should_show_home_contents() {
         // Arrange
@@ -46,7 +45,6 @@ class HomeScreenTest {
         rule.onNodeWithText(name).assertExists()
         rule.onNodeWithText(email).assertExists()
         rule.onNodeWithContentDescription("Profile Image").assertExists()
-
     }
 
     @Test
@@ -69,4 +67,3 @@ class HomeScreenTest {
         rule.onNodeWithText("Delete Acc").assertExists()
     }
 }
-

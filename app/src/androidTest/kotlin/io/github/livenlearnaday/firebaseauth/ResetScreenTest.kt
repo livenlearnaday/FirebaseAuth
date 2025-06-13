@@ -18,13 +18,13 @@ class ResetScreenTest {
 
     @Test
     fun should_enter_email_for_reset_password() {
-
         rule.setContent {
             ResetPasswordScreen(
                 resetPasswordState = ResetPasswordState(),
                 onResetPasswordAction = { },
                 onBackPressed = { },
-                onResetPasswordSuccess = { })
+                onResetPasswordSuccess = { }
+            )
         }
 
         val email = "test@email.com"

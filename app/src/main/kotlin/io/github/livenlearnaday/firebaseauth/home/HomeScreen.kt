@@ -51,14 +51,12 @@ import io.github.livenlearnaday.firebaseauth.ui.component.DotPulsingLoadingIndic
 import io.github.livenlearnaday.firebaseauth.ui.theme.FirebaseauthTheme
 import io.github.livenlearnaday.firebaseauth.ui.theme.LightGreyishBlue
 
-
 @Composable
 fun HomeScreen(
     homeState: HomeState,
     onHomeAction: (HomeAction) -> Unit,
     onNavigateToLogIn: () -> Unit
 ) {
-
     val context = LocalContext.current
 
     LaunchedEffect(
@@ -128,7 +126,6 @@ fun HomeScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
-
                 Card(
                     modifier = Modifier
                         .padding(16.dp),
@@ -147,9 +144,8 @@ fun HomeScreen(
                             .padding(16.dp)
                             .fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(8.dp),
-                        horizontalAlignment = Alignment.Start,
+                        horizontalAlignment = Alignment.Start
                     ) {
-
                         if (homeState.currentUser?.email?.isNotEmpty() == true) {
                             Text(
                                 text = homeState.currentUser.displayName.toString().ifEmpty {
@@ -160,7 +156,7 @@ fun HomeScreen(
                             Text(
                                 text = homeState.currentUser.email.toString().ifEmpty {
                                     stringResource(R.string.placeholder_email)
-                                },
+                                }
                             )
                         } else {
                             Text(stringResource(R.string.view_data))
@@ -179,7 +175,6 @@ fun HomeScreen(
                     alpha = if (homeState.isLoading) 0.2f else 1f
                 )
 
-
                 Text(
                     modifier = Modifier
                         .padding(16.dp)
@@ -192,9 +187,7 @@ fun HomeScreen(
                         lineHeight = TextUnit.Unspecified
                     )
                 )
-
             }
-
         }
     )
 }
@@ -238,14 +231,11 @@ fun HomeScreenTopUi(
                             enabled = !homeState.isLoading,
                             onClick = {
                                 onHomeAction(HomeAction.ShowAuthOptions(!homeState.showAuthOptions))
-
                             }
                         ),
                     imageUrlString = homeState.currentUser?.photoUrl.toString(),
                     placeHolderImageResource = R.drawable.ic_person
                 )
-
-
             }
 
             AnimatedVisibility(visible = homeState.showAuthOptions) {
@@ -255,7 +245,6 @@ fun HomeScreenTopUi(
                 )
             }
         }
-
     }
 }
 
@@ -264,7 +253,6 @@ fun AuthOptions(
     homeState: HomeState,
     onHomeAction: (HomeAction) -> Unit
 ) {
-
     Row(
         modifier = Modifier
             .height(80.dp)
@@ -273,7 +261,6 @@ fun AuthOptions(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-
         CustomButton(
             onButtonClicked = {
                 onHomeAction(HomeAction.OnClickedAuthButton)
@@ -282,15 +269,18 @@ fun AuthOptions(
                 .size(180.dp, 50.dp)
                 .padding(horizontal = 10.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
+                containerColor = Color.White
             ),
-            label = if (homeState.firebaseAuthState == FirebaseAuthState.Authenticated) stringResource(
-                R.string.sign_in
-            ) else stringResource(R.string.sign_out),
+            label = if (homeState.firebaseAuthState == FirebaseAuthState.Authenticated) {
+                stringResource(
+                    R.string.sign_in
+                )
+            } else {
+                stringResource(R.string.sign_out)
+            },
             enableButton = !homeState.isLoading
 
         )
-
 
         CustomButton(
             onButtonClicked = {
@@ -301,15 +291,13 @@ fun AuthOptions(
                 .size(180.dp, 50.dp)
                 .padding(horizontal = 10.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
+                containerColor = Color.White
             ),
             label = stringResource(R.string.delete_acc),
             textColor = Color.Red,
             enableButton = !homeState.isLoading
         )
-
     }
-
 }
 
 @Composable
@@ -323,11 +311,10 @@ fun PreviewHomeScreen() {
                 isLoggedIn = true
             ),
             onHomeAction = {},
-            onNavigateToLogIn = {},
+            onNavigateToLogIn = {}
         )
     }
 }
-
 
 @Composable
 @Preview(showBackground = true)
@@ -343,4 +330,3 @@ fun PreviewHomeScreenLoading() {
         )
     }
 }
-

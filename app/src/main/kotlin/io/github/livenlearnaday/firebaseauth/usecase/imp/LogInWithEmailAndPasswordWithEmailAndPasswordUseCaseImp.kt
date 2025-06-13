@@ -5,11 +5,8 @@ import io.github.livenlearnaday.firebaseauth.data.repository.AuthRepository
 import io.github.livenlearnaday.firebaseauth.usecase.LogInWithEmailAndPasswordUseCase
 import io.github.livenlearnaday.firebaseauth.util.Response
 
-class LogInWithEmailAndPasswordUseCaseImp     (
+class LogInWithEmailAndPasswordUseCaseImp(
     private val authRepository: AuthRepository
-): LogInWithEmailAndPasswordUseCase {
-    override suspend fun execute(authRequestModel: AuthRequestModel): Response<Boolean> {
-        return authRepository.loginWithEmailAndPassword(authRequestModel)
-    }
-
+) : LogInWithEmailAndPasswordUseCase {
+    override suspend fun execute(authRequestModel: AuthRequestModel): Response<Boolean> = authRepository.loginWithEmailAndPassword(authRequestModel)
 }

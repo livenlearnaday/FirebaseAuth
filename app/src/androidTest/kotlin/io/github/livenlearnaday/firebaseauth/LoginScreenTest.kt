@@ -8,9 +8,9 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import io.github.livenlearnaday.firebaseauth.auth.login.LoginScreen
 import io.github.livenlearnaday.firebaseauth.auth.login.LoginState
+import java.util.UUID
 import org.junit.Rule
 import org.junit.Test
-import java.util.UUID
 
 class LoginScreenTest {
     @get:Rule
@@ -25,7 +25,7 @@ class LoginScreenTest {
                 onLoginAction = { },
                 onLogInSuccess = { },
                 onForgotPassword = { }
-                )
+            )
         }
 
         // Act & Assert

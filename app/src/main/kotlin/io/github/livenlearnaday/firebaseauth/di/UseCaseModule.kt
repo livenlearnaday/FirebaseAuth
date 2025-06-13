@@ -64,8 +64,4 @@ val useCaseModule = module {
     factory<FetchCredentialUseCase> {
         FetchCredentialUseCaseImp(get<AuthRepository>())
     }
-
-
-
-
 }

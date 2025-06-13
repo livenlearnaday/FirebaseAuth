@@ -28,7 +28,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-
 @Composable
 fun CircularLoadingIndicator(
     modifier: Modifier,
@@ -37,7 +36,7 @@ fun CircularLoadingIndicator(
     Box(
         modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         CircularProgressIndicator(
             color = color,
             strokeWidth = 5.dp
@@ -56,15 +55,13 @@ fun DotPulsingLoadingIndicator() {
     }
 }
 
-
 val dotSize = 12.dp
-const val delayUnit = 300 // change delay to change animation speed
+const val DELAY_UNIT = 300 // change delay to change animation speed
 
 @Composable
 fun DotsPulsing(
-    dotColor: Color = Color.White,
+    dotColor: Color = Color.White
 ) {
-
     @Composable
     fun Dot(
         scale: Float
@@ -86,18 +83,18 @@ fun DotsPulsing(
         targetValue = 0f,
         animationSpec = infiniteRepeatable(
             animation = keyframes {
-                durationMillis = delayUnit * 4
+                durationMillis = DELAY_UNIT * 4
                 0f at delay using LinearEasing
-                1f at delay + delayUnit using LinearEasing
-                0f at delay + delayUnit * 2
+                1f at delay + DELAY_UNIT using LinearEasing
+                0f at delay + DELAY_UNIT * 2
             }
         ),
         label = ""
     )
 
     val scale1 by animateScaleWithDelay(0)
-    val scale2 by animateScaleWithDelay(delayUnit)
-    val scale3 by animateScaleWithDelay(delayUnit * 2)
+    val scale2 by animateScaleWithDelay(DELAY_UNIT)
+    val scale3 by animateScaleWithDelay(DELAY_UNIT * 2)
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -113,20 +110,14 @@ fun DotsPulsing(
     }
 }
 
-
-
-
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewDotsPulsing() = MaterialTheme {
     Column(modifier = Modifier.padding(4.dp)) {
-
         Text(
-            text = "Dots pulsing",
+            text = "Dots pulsing"
 
         )
         DotsPulsing()
-
     }
 }

@@ -13,6 +13,4 @@ interface CoroutineDispatcherProvider {
     fun immediate(): CoroutineDispatcher = Dispatchers.Main.immediate
 
     fun unconfined(): CoroutineDispatcher = Dispatchers.Unconfined
-
-
 }

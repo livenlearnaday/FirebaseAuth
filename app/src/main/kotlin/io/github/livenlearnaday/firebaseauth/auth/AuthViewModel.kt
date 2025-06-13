@@ -63,7 +63,6 @@ class AuthViewModel(
     var homeState by mutableStateOf(HomeState())
         private set
 
-
     private val credentialStateFlow = MutableStateFlow<Credential?>(null)
 
     init {
@@ -73,15 +72,12 @@ class AuthViewModel(
 
         updateAuthState()
 
-
         mainState = mainState.copy(
             isLoading = false
         )
-
     }
 
     private fun updateAuthState() {
-
         val response = getAuthStateUseCase.execute(viewModelScope)
         mainState = mainState.copy(
             currentUser = response.value,
@@ -101,9 +97,7 @@ class AuthViewModel(
             } ?: FirebaseAuthState.SignedOut,
             isLoggedIn = response.value != null
         )
-
     }
-
 
     private fun fetchCredentials(context: Context) {
         viewModelScope.launch(defaultExceptionHandler) {
@@ -127,7 +121,6 @@ class AuthViewModel(
                         if (!homeState.isDeletingAccount) {
                             signInWithGoogle(credential)
                         }
-
                     }
 
                     is Response.Failure -> {
@@ -139,7 +132,6 @@ class AuthViewModel(
                             showError = true
                         )
                     }
-
                 }
             }
         }
@@ -197,12 +189,9 @@ class AuthViewModel(
         }
     }
 
-
     fun onHomeAction(homeAction: HomeAction) {
         when (homeAction) {
-
             HomeAction.OnSignOut -> signOut()
-
 
             is HomeAction.UpdateOpenDeleteAccountDialog -> {
                 homeState = homeState.copy(
@@ -248,95 +237,87 @@ class AuthViewModel(
         }
     }
 
+    private fun signUpWithEmailAndPassword(authRequestModel: AuthRequestModel) = viewModelScope.launch(defaultExceptionHandler) {
+        loginState = loginState.copy(
+            isLoading = true
+        )
+        withContext(coroutineDispatcherProvider.io()) {
+            when (val response = signUpWithEmailAndPasswordUseCase.execute(authRequestModel)) {
+                is Response.Loading -> {
+                    Timber.d("$TAG signUpWithEmailAndPassword Loading")
+                    loginState = loginState.copy(
+                        isLoading = true
+                    )
+                }
 
-    private fun signUpWithEmailAndPassword(authRequestModel: AuthRequestModel) =
-        viewModelScope.launch(defaultExceptionHandler) {
-            loginState = loginState.copy(
-                isLoading = true
-            )
-            withContext(coroutineDispatcherProvider.io()) {
-                when (val response = signUpWithEmailAndPasswordUseCase.execute(authRequestModel)) {
-                    is Response.Loading -> {
-                        Timber.d("$TAG signUpWithEmailAndPassword Loading")
-                        loginState = loginState.copy(
-                            isLoading = true
-                        )
-                    }
+                is Response.Success -> response.data?.let { authResult ->
+                    Timber.d("$TAG signUpWithEmailAndPassword Success: $authResult")
+                    homeState = homeState.copy(
+                        isLoggedIn = true
+                    )
 
-                    is Response.Success -> response.data?.let { authResult ->
-                        Timber.d("$TAG signUpWithEmailAndPassword Success: $authResult")
-                        homeState = homeState.copy(
-                            isLoggedIn = true
-                        )
+                    loginState = loginState.copy(
+                        isLogInSuccess = true,
+                        isLoggedIn = true
+                    )
+                    mainState = mainState.copy(
+                        isLoggedIn = true
+                    )
+                }
 
-                        loginState = loginState.copy(
-                            isLogInSuccess = true,
-                            isLoggedIn = true
-                        )
-                        mainState = mainState.copy(
-                            isLoggedIn = true
-                        )
+                is Response.Failure -> {
+                    Timber.e("$TAG signUpWithEmailAndPassword Failure ${response.error}")
+                    loginState = loginState.copy(
+                        isLoading = false,
+                        isLogInSuccess = false,
+                        errorMessage = response.error.message ?: "",
+                        showError = true
 
-                    }
-
-                    is Response.Failure -> {
-                        Timber.e("$TAG signUpWithEmailAndPassword Failure ${response.error}")
-                        loginState = loginState.copy(
-                            isLoading = false,
-                            isLogInSuccess = false,
-                            errorMessage = response.error.message ?: "",
-                            showError = true
-
-                        )
-                    }
-
+                    )
                 }
             }
         }
+    }
 
-    private fun logInWithEmailAndPassword(authRequestModel: AuthRequestModel) =
-        viewModelScope.launch(defaultExceptionHandler) {
-            loginState = loginState.copy(
-                isLoading = true
-            )
-            withContext(coroutineDispatcherProvider.io()) {
-                when (val response = logInWithEmailAndPasswordUseCase.execute(authRequestModel)) {
-                    is Response.Loading -> {
-                        Timber.d("$TAG logInWithEmailAndPassword Loading")
-                        loginState = loginState.copy(
-                            isLoading = true
-                        )
-                    }
+    private fun logInWithEmailAndPassword(authRequestModel: AuthRequestModel) = viewModelScope.launch(defaultExceptionHandler) {
+        loginState = loginState.copy(
+            isLoading = true
+        )
+        withContext(coroutineDispatcherProvider.io()) {
+            when (val response = logInWithEmailAndPasswordUseCase.execute(authRequestModel)) {
+                is Response.Loading -> {
+                    Timber.d("$TAG logInWithEmailAndPassword Loading")
+                    loginState = loginState.copy(
+                        isLoading = true
+                    )
+                }
 
-                    is Response.Success -> response.data?.let { authResult ->
-                        Timber.d("$TAG logInWithEmailAndPassword Success: $authResult")
-                        loginState = loginState.copy(
-                            isLogInSuccess = true,
-                            isLoggedIn = true
-                        )
-                        homeState = homeState.copy(
-                            isLoggedIn = true
-                        )
-                        mainState = mainState.copy(
-                            isLoggedIn = true
-                        )
+                is Response.Success -> response.data?.let { authResult ->
+                    Timber.d("$TAG logInWithEmailAndPassword Success: $authResult")
+                    loginState = loginState.copy(
+                        isLogInSuccess = true,
+                        isLoggedIn = true
+                    )
+                    homeState = homeState.copy(
+                        isLoggedIn = true
+                    )
+                    mainState = mainState.copy(
+                        isLoggedIn = true
+                    )
+                }
 
-                    }
-
-                    is Response.Failure -> {
-                        Timber.e("$TAG logInWithEmailAndPassword Failure ${response.error}")
-                        loginState = loginState.copy(
-                            isLoading = false,
-                            isLogInSuccess = false,
-                            errorMessage = response.error.message ?: "",
-                            showError = true
-                        )
-                    }
-
+                is Response.Failure -> {
+                    Timber.e("$TAG logInWithEmailAndPassword Failure ${response.error}")
+                    loginState = loginState.copy(
+                        isLoading = false,
+                        isLogInSuccess = false,
+                        errorMessage = response.error.message ?: "",
+                        showError = true
+                    )
                 }
             }
         }
-
+    }
 
     private fun signInAnonymously() = viewModelScope.launch(defaultExceptionHandler) {
         withContext(coroutineDispatcherProvider.io()) {
@@ -361,7 +342,6 @@ class AuthViewModel(
                     mainState = mainState.copy(
                         isLoggedIn = true
                     )
-
                 }
 
                 is Response.Failure -> {
@@ -373,57 +353,52 @@ class AuthViewModel(
                         errorMessage = response.error.message ?: "",
                         showError = true
                     )
-
                 }
-
             }
         }
     }
 
-    private fun signInWithGoogle(credential: Credential) =
-        viewModelScope.launch(defaultExceptionHandler) {
-            withContext(coroutineDispatcherProvider.io()) {
-                when (val response = googleSignInUseCase.execute(credential)) {
-                    is Response.Loading -> {
-                        Timber.d("$TAG signInWithGoogle Loading")
-                        loginState = loginState.copy(
-                            isLoading = true
-                        )
-                    }
+    private fun signInWithGoogle(credential: Credential) = viewModelScope.launch(defaultExceptionHandler) {
+        withContext(coroutineDispatcherProvider.io()) {
+            when (val response = googleSignInUseCase.execute(credential)) {
+                is Response.Loading -> {
+                    Timber.d("$TAG signInWithGoogle Loading")
+                    loginState = loginState.copy(
+                        isLoading = true
+                    )
+                }
 
-                    is Response.Success -> {
-                        response.data?.let { authResult ->
-                            Timber.d("$TAG signInWithGoogle Success: $authResult")
-                            updateAuthState()
-                            loginState = loginState.copy(
-                                isLogInSuccess = true,
-                                isLoggedIn = true,
-                                isLoading = false
-                            )
-                            homeState = homeState.copy(
-                                isLoggedIn = true
-                            )
-                            mainState = mainState.copy(
-                                isLoggedIn = true
-                            )
-                        }
-                    }
-
-                    is Response.Failure -> {
-                        Timber.e("$TAG signInWithGoogle Failure ${response.error}")
+                is Response.Success -> {
+                    response.data?.let { authResult ->
+                        Timber.d("$TAG signInWithGoogle Success: $authResult")
                         updateAuthState()
                         loginState = loginState.copy(
-                            isLoading = false,
-                            isLogInSuccess = false,
-                            errorMessage = response.error.message ?: "",
-                            showError = true
+                            isLogInSuccess = true,
+                            isLoggedIn = true,
+                            isLoading = false
                         )
-
+                        homeState = homeState.copy(
+                            isLoggedIn = true
+                        )
+                        mainState = mainState.copy(
+                            isLoggedIn = true
+                        )
                     }
+                }
 
+                is Response.Failure -> {
+                    Timber.e("$TAG signInWithGoogle Failure ${response.error}")
+                    updateAuthState()
+                    loginState = loginState.copy(
+                        isLoading = false,
+                        isLogInSuccess = false,
+                        errorMessage = response.error.message ?: "",
+                        showError = true
+                    )
                 }
             }
         }
+    }
 
     private fun signOut() = viewModelScope.launch(defaultExceptionHandler) {
         homeState = homeState.copy(
@@ -469,88 +444,80 @@ class AuthViewModel(
                     loginState = loginState.copy(
                         authType = AuthType.LOGIN
                     )
-
                 }
             }
         }
     }
 
-    private fun deleteAccount(credential: Credential?) =
-        viewModelScope.launch(defaultExceptionHandler) {
-            withContext(coroutineDispatcherProvider.io()) {
-                when (val response = deleteUserAccountUseCase.execute(credential)) {
-                    is Response.Loading -> {
-                        Timber.d("$TAG deleteAccount Loading")
-                        homeState = homeState.copy(
-                            isLoading = true
-                        )
+    private fun deleteAccount(credential: Credential?) = viewModelScope.launch(defaultExceptionHandler) {
+        withContext(coroutineDispatcherProvider.io()) {
+            when (val response = deleteUserAccountUseCase.execute(credential)) {
+                is Response.Loading -> {
+                    Timber.d("$TAG deleteAccount Loading")
+                    homeState = homeState.copy(
+                        isLoading = true
+                    )
+                }
 
-                    }
-
-                    is Response.Success -> {
-                        response.data?.let { authResult ->
-                            Timber.d("$TAG deleteAccount Success: $authResult")
-                            updateAuthState()
-                            homeState = homeState.copy(
-                                isLogOutSuccess = true,
-                                isLoggedIn = false,
-                                isDeletingAccount = false
-                            )
-                            mainState = mainState.copy(
-                                isLoggedIn = false
-                            )
-                            loginState = loginState.copy(
-                                isLoggedIn = false,
-                                authType = AuthType.LOGIN
-                            )
-                        }
-                    }
-
-                    is Response.Failure -> {
-                        Timber.e("$TAG deleteAccount Failure ${response.error}")
+                is Response.Success -> {
+                    response.data?.let { authResult ->
+                        Timber.d("$TAG deleteAccount Success: $authResult")
                         updateAuthState()
                         homeState = homeState.copy(
-                            isLoading = false,
-                            isLogOutSuccess = false,
-                            errorMessage = response.error.message ?: "",
-                            showError = true,
+                            isLogOutSuccess = true,
+                            isLoggedIn = false,
                             isDeletingAccount = false
                         )
+                        mainState = mainState.copy(
+                            isLoggedIn = false
+                        )
                         loginState = loginState.copy(
+                            isLoggedIn = false,
                             authType = AuthType.LOGIN
                         )
-
                     }
+                }
+
+                is Response.Failure -> {
+                    Timber.e("$TAG deleteAccount Failure ${response.error}")
+                    updateAuthState()
+                    homeState = homeState.copy(
+                        isLoading = false,
+                        isLogOutSuccess = false,
+                        errorMessage = response.error.message ?: "",
+                        showError = true,
+                        isDeletingAccount = false
+                    )
+                    loginState = loginState.copy(
+                        authType = AuthType.LOGIN
+                    )
                 }
             }
         }
+    }
 
-    private fun checkNeedsReAuth(context: Context) =
-        viewModelScope.launch(defaultExceptionHandler) {
-            homeState = homeState.copy(
-                isLoading = true,
-                openDeleteAccountDialog = false,
-                isDeletingAccount = true
-            )
-            withContext(coroutineDispatcherProvider.io()) {
-                when (reAuthenticationCheckUseCase.execute()) {
-                    true -> {
-                        viewModelScope.launch(defaultExceptionHandler) {
-                            withContext(coroutineDispatcherProvider.io()) {
-                                fetchCredentials(context)
+    private fun checkNeedsReAuth(context: Context) = viewModelScope.launch(defaultExceptionHandler) {
+        homeState = homeState.copy(
+            isLoading = true,
+            openDeleteAccountDialog = false,
+            isDeletingAccount = true
+        )
+        withContext(coroutineDispatcherProvider.io()) {
+            when (reAuthenticationCheckUseCase.execute()) {
+                true -> {
+                    viewModelScope.launch(defaultExceptionHandler) {
+                        withContext(coroutineDispatcherProvider.io()) {
+                            fetchCredentials(context)
 
-                                credentialStateFlow.value?.let { credential ->
-                                    deleteAccount(credential)
-                                } ?: deleteAccount(null)
-
-                            }
+                            credentialStateFlow.value?.let { credential ->
+                                deleteAccount(credential)
+                            } ?: deleteAccount(null)
                         }
                     }
-
-                    else -> deleteAccount(null)
-
                 }
 
+                else -> deleteAccount(null)
             }
         }
+    }
 }

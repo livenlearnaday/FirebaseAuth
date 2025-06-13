@@ -54,11 +54,10 @@ fun LoginScreen(
     val context = LocalContext.current
     val keyboard = LocalSoftwareKeyboardController.current
 
-
     LaunchedEffect(loginState.showError) {
         if (loginState.showError) {
             keyboard?.hide()
-            Toast.makeText(context, loginState.errorMessage.ifEmpty { context.getString(R.string.error_general)  }, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, loginState.errorMessage.ifEmpty { context.getString(R.string.error_general) }, Toast.LENGTH_LONG).show()
             onLoginAction(LoginAction.OnResetScreen)
         }
     }
@@ -96,9 +95,6 @@ fun LoginScreen(
     }
 */
 
-
-
-
     Scaffold(
         containerColor = Color.LightGray,
         content = { innerPadding ->
@@ -117,7 +113,6 @@ fun LoginScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-
                     ConstraintLayout {
                         val (
                             imageLogin,
@@ -134,10 +129,9 @@ fun LoginScreen(
                                 },
                             imageVector = ImageVector.vectorResource(R.drawable.ic_security),
                             contentDescription = null,
-                            contentScale = ContentScale.Fit,
+                            contentScale = ContentScale.Fit
 
-                            )
-
+                        )
 
                         Column(
                             modifier = Modifier
@@ -149,7 +143,6 @@ fun LoginScreen(
                             verticalArrangement = Arrangement.Center,
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-
                             EmailTextField(
                                 modifier = Modifier
                                     .size(width = 400.dp, height = 50.dp)
@@ -183,9 +176,13 @@ fun LoginScreen(
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color.White
                                 ),
-                                label = if (loginState.authType == AuthType.SIGNUP) stringResource(R.string.sign_up) else stringResource(
-                                    R.string.login
-                                ),
+                                label = if (loginState.authType == AuthType.SIGNUP) {
+                                    stringResource(R.string.sign_up)
+                                } else {
+                                    stringResource(
+                                        R.string.login
+                                    )
+                                },
                                 enableButton = !loginState.isLoading,
                                 showLoading = loginState.isLoading && (loginState.authType == AuthType.LOGIN || loginState.authType == AuthType.SIGNUP)
                             )
@@ -219,7 +216,6 @@ fun LoginScreen(
                                 )
                             }
 
-
                             Spacer(modifier = Modifier.height(30.dp))
 
                             CustomButton(
@@ -240,12 +236,10 @@ fun LoginScreen(
 
                             Spacer(Modifier.height(16.dp))
 
-
                             if (loginState.firebaseAuthState == FirebaseAuthState.SignedOut) {
                                 CustomButton(
                                     onButtonClicked = {
                                         onLoginAction(LoginAction.OnSignInAnonymously)
-
                                     },
                                     modifier = Modifier
                                         .size(width = 300.dp, height = 50.dp)
@@ -266,7 +260,6 @@ fun LoginScreen(
     )
 }
 
-
 @Composable
 @Preview(showBackground = true)
 fun PreviewLoginScreen() {
@@ -279,4 +272,3 @@ fun PreviewLoginScreen() {
         )
     }
 }
-

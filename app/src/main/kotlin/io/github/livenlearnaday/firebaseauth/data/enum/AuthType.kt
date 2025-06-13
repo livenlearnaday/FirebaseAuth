@@ -5,5 +5,5 @@ enum class AuthType {
     SIGNUP,
     GOOGLE,
     ANONYMOUS,
-    RESET_PASS;
+    RESET_PASS
 }
