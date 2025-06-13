@@ -6,12 +6,26 @@ plugins {
     alias(libs.plugins.ksp.plugin)
     alias(libs.plugins.serialization.ktx)
     alias(libs.plugins.gms)
+    alias(libs.plugins.spotless)
+}
+
+kotlin {
+    sourceSets {
+        android {
+            dependencies {
+                implementation(libs.kotlinx.datetime)
+            }
+        }
+    }
 }
 
 android {
     namespace = "io.github.livenlearnaday.firebaseauth"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
+    /* Retrieves API from local.properties */
+    val properties = org.jetbrains.kotlin.konan.properties.Properties()
+    properties.load(project.rootProject.file("local.properties").inputStream())
 
     defaultConfig {
         applicationId = "io.github.livenlearnaday.firebaseauth"
@@ -24,20 +38,16 @@ android {
             useSupportLibrary = true
         }
 
-        /* Retrieves API from local.properties */
-        val properties = org.jetbrains.kotlin.konan.properties.Properties()
-        properties.load(project.rootProject.file("local.properties").inputStream())
-
         buildConfigField("String", "AUTH_WEB_CLIENT_ID",
-            properties.getProperty("AUTH_WEB_CLIENT_ID")
+            "${properties["AUTH_WEB_CLIENT_ID"]}"
         )
     }
 
     signingConfigs {
         create("release") {
-            this.keyAlias = "key0"
+            this.keyAlias = "${properties["KEY_ALIAS"]}"
             this.keyPassword = "${properties["KEY_PASSWORD"]}"
-            this.storeFile = file("_files/_keystores/firebaseauth.jks")
+            this.storeFile = file("${properties["KEY_FILE_PATH"]}")
             this.storePassword = "${properties["STORE_PASSWORD"]}"
         }
     }
@@ -45,29 +55,28 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
+            isDebuggable = false
+            aaptOptions.cruncherEnabled = false
+            multiDexEnabled = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "../proguard-rules.pro"
             )
         }
     }
 
-
-
-
-
-
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.toVersion(libs.versions.jvm.get())
+        targetCompatibility = JavaVersion.toVersion(libs.versions.jvm.get())
+
+        isCoreLibraryDesugaringEnabled = true
     }
+
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = libs.versions.jvm.get()
     }
-    kotlin {
-        jvmToolchain(21)
-    }
+
     buildFeatures {
         buildConfig = true
         compose = true
@@ -75,16 +84,19 @@ android {
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += listOf(
+                "META-INF/AL2.0",
+                "META-INF/LGPL2.1",
+                "META-INF/licenses/ASM"
+            )
         }
     }
+
     testOptions {
         packaging {
             resources.excludes.add("META-INF/*")
         }
     }
-
-
 
 }
 
@@ -94,6 +106,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout.compose)
+    coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))
@@ -125,7 +138,7 @@ dependencies {
 
     implementation(libs.androidx.core.splashscreen)
 
-    implementation(libs.glide.compose)
+    implementation(libs.bundles.coil)
 
     //Test
     testImplementation(libs.bundles.test.impl)
