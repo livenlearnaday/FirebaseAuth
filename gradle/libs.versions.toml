@@ -48,8 +48,6 @@ junit = "4.13.2"
 mockk = "1.13.13"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-androidxTestRunner = "1.6.2"
-androidxArchCoreTesting = "2.2.0"
 truth = "1.4.2"
 
 
@@ -128,8 +126,6 @@ mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockk" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
-androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "androidxArchCoreTesting" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 
 # part of compose bom
