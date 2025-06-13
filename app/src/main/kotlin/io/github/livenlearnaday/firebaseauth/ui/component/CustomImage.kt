@@ -1,6 +1,5 @@
 package io.github.livenlearnaday.firebaseauth.ui.component
 
-import android.net.Uri
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -12,27 +11,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.bumptech.glide.integration.compose.placeholder
+import coil3.compose.AsyncImage
+import coil3.request.CachePolicy
+import coil3.request.ImageRequest
+import coil3.request.crossfade
+import coil3.svg.SvgDecoder
 import io.github.livenlearnaday.firebaseauth.R
 import io.github.livenlearnaday.firebaseauth.ui.theme.FirebaseauthTheme
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun CustomImage(
+    modifier: Modifier = Modifier,
     imageUrlString: String = "",
     placeHolderImageResource: Int,
-    modifier: Modifier = Modifier,
     borderColor: Color = Color.White
 ) {
 
     if (imageUrlString.isNotEmpty()) {
-        GlideImage(
+        AsyncImage(
             modifier = modifier
                 .clip(RoundedCornerShape(16.dp))
                 .border(
@@ -41,12 +42,15 @@ fun CustomImage(
                         width = 1.dp,
                         color = borderColor,
                     )
-
                 ),
-            model = Uri.parse(imageUrlString),
+            model = ImageRequest.Builder(LocalContext.current)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .memoryCachePolicy(CachePolicy.ENABLED)
+                    .crossfade(true)
+                    .data( imageUrlString)
+                    .build(),
             contentDescription = stringResource(R.string.profile_image),
-            contentScale = ContentScale.Inside,
-            failure = placeholder(placeHolderImageResource)
+            fallback = painterResource(placeHolderImageResource)
         )
 
     } else {
