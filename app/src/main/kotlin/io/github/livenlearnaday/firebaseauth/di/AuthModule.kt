@@ -13,21 +13,18 @@ import io.github.livenlearnaday.firebaseauth.util.imp.CoroutineDispatcherProvide
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-
-fun provideGoogleIdOption() =  GetGoogleIdOption.Builder()
+fun provideGoogleIdOption() = GetGoogleIdOption.Builder()
     .setFilterByAuthorizedAccounts(false)
     .setServerClientId(WEB_CLIENT_ID)
     .setNonce(createNonce())
     .setAutoSelectEnabled(false)
     .build()
 
-
 fun provideCredentialRequest() = GetCredentialRequest.Builder()
     .addCredentialOption(provideGoogleIdOption())
     .build()
 
 fun provideFirebaseInstance() = FirebaseAuth.getInstance()
-
 
 val authModule = module {
 
@@ -54,6 +51,4 @@ val authModule = module {
     factory<CoroutineDispatcherProvider> {
         CoroutineDispatcherProviderImp()
     }
-
-
 }

@@ -16,7 +16,6 @@ import io.github.livenlearnaday.firebaseauth.util.CoroutineDispatcherProvider
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
-
 val viewModelModule = module {
 
     viewModel<AuthViewModel> {
@@ -39,7 +38,4 @@ val viewModelModule = module {
             get<ResetPasswordUseCase>()
         )
     }
-
-
-
 }

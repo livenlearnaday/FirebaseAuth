@@ -38,7 +38,6 @@ import io.github.livenlearnaday.firebaseauth.ui.component.CustomButton
 import io.github.livenlearnaday.firebaseauth.ui.component.EmailTextField
 import io.github.livenlearnaday.firebaseauth.ui.theme.FirebaseauthTheme
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ResetPasswordScreen(
@@ -48,7 +47,6 @@ fun ResetPasswordScreen(
     onBackPressed: () -> Unit,
     onResetPasswordSuccess: (message: String) -> Unit
 ) {
-
     val keyboard = LocalSoftwareKeyboardController.currentOrThrow
 
     LaunchedEffect(key1 = resetPasswordState.isResetPasswordSuccess) {
@@ -80,7 +78,6 @@ fun ResetPasswordScreen(
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Center
         ) {
-
             Spacer(modifier = Modifier.height(32.dp))
 
             Image(

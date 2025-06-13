@@ -8,9 +8,6 @@ import io.github.livenlearnaday.firebaseauth.util.Response
 
 class FetchCredentialUseCaseImp(
     private val authRepository: AuthRepository
-): FetchCredentialUseCase {
-    override suspend fun execute(context: Context): Response<Credential> {
-        return authRepository.fetchCredential(context)
-    }
-
+) : FetchCredentialUseCase {
+    override suspend fun execute(context: Context): Response<Credential> = authRepository.fetchCredential(context)
 }

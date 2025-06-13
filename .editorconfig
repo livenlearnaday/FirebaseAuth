@@ -7,5 +7,19 @@ trim_trailing_whitespace = true
 
 [*.{kt,kts}]
 indent_size = 4
+ktlint_standard = enabled
+ktlint_experimental = enabled
+ktlint_code_style = android_studio
+ktlint_standard_comment-spacing = disabled
+ktlint_standard_package-name = disabled
+ktlint_experimental_package-naming = enabled
 ij_kotlin_allow_trailing_comma = false
 ij_kotlin_allow_trailing_comma_on_call_site = false
+ktlint_standard_backing-property-naming = disabled
+ktlint_function_naming_ignore_when_annotated_with=Composable
+ktlint_standard_function-naming = disabled
+ktlint_standard_filename = disabled
+ktlint_standard_max-line-length = disabled
+ktlint_standard_kdoc = disabled
+ktlint_standard_value-argument-comment = disabled
+ktlint_standard_no-empty-file = disabled

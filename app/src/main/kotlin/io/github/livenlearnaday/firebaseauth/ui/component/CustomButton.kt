@@ -40,7 +40,6 @@ fun CustomButton(
     enableButton: Boolean = true,
     onButtonClicked: () -> Unit
 ) {
-
     Button(
         enabled = enableButton,
         modifier = modifier
@@ -77,7 +76,6 @@ fun CustomButton(
     )
 }
 
-
 @Composable
 @Preview(
     showBackground = true,
@@ -93,7 +91,6 @@ fun PreviewCustomButtonLoading() {
     )
 }
 
-
 @Composable
 @Preview(
     showBackground = true,
@@ -103,25 +100,22 @@ fun PreviewCustomButtonLoading() {
 fun PreviewCustomButton() {
     CustomButton(
         modifier = Modifier
-            .wrapContentWidth()
+            .wrapContentWidth(),
 //            .fillMaxWidth()
-        ,
         label = "Delete Account",
         showLoading = false,
         onButtonClicked = {}
     )
 }
 
-
-
 @Composable
 fun VisibleToggleButton(
     modifier: Modifier,
     showPassword: Boolean,
-    onButtonCLicked: () -> Unit,
+    onButtonCLicked: () -> Unit
 ) {
     Image(
-        painter = if (showPassword) painterResource(R.drawable.ic_visible_on) else  painterResource(R.drawable.ic_visible_off),
+        painter = if (showPassword) painterResource(R.drawable.ic_visible_on) else painterResource(R.drawable.ic_visible_off),
         contentDescription = null,
         modifier = modifier
             .size(24.dp)
@@ -129,11 +123,11 @@ fun VisibleToggleButton(
                 onButtonCLicked()
             })
     )
-
 }
 
 @Composable
-@Preview(showBackground = true,
+@Preview(
+    showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
 )
 fun PreviewVisibleToggleButtonShowPassword() {
@@ -143,6 +137,3 @@ fun PreviewVisibleToggleButtonShowPassword() {
         onButtonCLicked = {}
     )
 }
-
-
-

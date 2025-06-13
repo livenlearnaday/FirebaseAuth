@@ -12,7 +12,6 @@ import io.github.livenlearnaday.firebaseauth.ui.theme.FirebaseauthTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.compose.KoinContext
 
-
 class MainActivity : ComponentActivity() {
     private val authViewModel by viewModel<AuthViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {

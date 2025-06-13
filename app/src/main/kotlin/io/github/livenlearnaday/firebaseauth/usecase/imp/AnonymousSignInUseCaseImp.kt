@@ -7,9 +7,6 @@ import io.github.livenlearnaday.firebaseauth.util.Response
 
 class AnonymousSignInUseCaseImp(
     private val authRepository: AuthRepository
-): AnonymousSignInUseCase {
-    override suspend fun execute(): Response<AuthResult> {
-        return authRepository.signInAnonymously()
-    }
-
+) : AnonymousSignInUseCase {
+    override suspend fun execute(): Response<AuthResult> = authRepository.signInAnonymously()
 }

@@ -41,12 +41,11 @@ import io.github.livenlearnaday.firebaseauth.ui.theme.FirebaseauthTheme
 import io.github.livenlearnaday.firebaseauth.ui.theme.LighterGrey
 import io.github.livenlearnaday.firebaseauth.ui.theme.PurpleGrey80
 
-
 @Composable
 fun PasswordTextField(
     state: TextFieldState,
     hint: String,
-    modifier: Modifier = Modifier,
+    modifier: Modifier = Modifier
 ) {
     var isFocused by remember {
         mutableStateOf(false)
@@ -57,16 +56,14 @@ fun PasswordTextField(
     }
 
     Column(
-        modifier = modifier,
+        modifier = modifier
     ) {
-
         BasicSecureTextField(
             state = state,
             textObfuscationMode =
-            if(showPassword) {
+            if (showPassword) {
                 TextObfuscationMode.Visible
-            }
-            else {
+            } else {
                 TextObfuscationMode.Hidden
             },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -104,13 +101,12 @@ fun PasswordTextField(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-
                     Spacer(modifier = Modifier.width(4.dp))
 
                     Box(
                         modifier = Modifier.weight(1f)
                     ) {
-                        if(state.text.isBlank() && !isFocused) {
+                        if (state.text.isBlank() && !isFocused) {
                             Text(
                                 text = hint,
                                 color = Color.Black.copy(alpha = 0.6f),
@@ -137,18 +133,17 @@ fun PasswordTextField(
     }
 }
 
-
-
 @Composable
-@Preview(showBackground = true,
+@Preview(
+    showBackground = true,
     uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL
 )
 fun PreviewPasswordTextField() {
-    FirebaseauthTheme  {
+    FirebaseauthTheme {
         PasswordTextField(
             state = rememberTextFieldState(),
             hint = "Password",
-            modifier = Modifier.fillMaxWidth())
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
-

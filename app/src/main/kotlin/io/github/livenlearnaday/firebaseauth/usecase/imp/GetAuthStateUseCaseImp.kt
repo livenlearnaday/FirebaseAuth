@@ -8,10 +8,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 class GetAuthStateUseCaseImp(
     private val authRepository: AuthRepository
-): GetAuthStateUseCase {
-    override fun execute(scope: CoroutineScope): StateFlow<FirebaseUser?> {
-        return authRepository.getAuthState(scope)
-    }
-
-
+) : GetAuthStateUseCase {
+    override fun execute(scope: CoroutineScope): StateFlow<FirebaseUser?> = authRepository.getAuthState(scope)
 }
