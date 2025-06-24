@@ -146,8 +146,7 @@ fun LoginScreen(
                                     onLoginAction(LoginAction.OnAuthWithEmailAndPassword)
                                 },
                                 modifier = Modifier
-                                    .size(width = 300.dp, height = 50.dp)
-                                    .padding(horizontal = 16.dp),
+                                    .padding(horizontal = 15.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color.White
                                 ),
@@ -161,7 +160,7 @@ fun LoginScreen(
                                 enableButton = !loginState.isLoading,
                                 showLoading = loginState.isLoading && (loginState.authType == AuthType.LOGIN || loginState.authType == AuthType.SIGNUP)
                             )
-                            Spacer(modifier = Modifier.height(20.dp))
+                            Spacer(modifier = Modifier.height(24.dp))
 
                             Row {
                                 if (loginState.authType != AuthType.SIGNUP) {
@@ -198,8 +197,7 @@ fun LoginScreen(
                                     onLoginAction(LoginAction.OnClickGoogleSignIn(context))
                                 },
                                 modifier = Modifier
-                                    .size(width = 300.dp, height = 50.dp)
-                                    .padding(horizontal = 16.dp),
+                                    .padding(horizontal = 15.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = Color.White
                                 ),
@@ -209,7 +207,7 @@ fun LoginScreen(
                                 showLoading = loginState.isLoading && loginState.authType == AuthType.GOOGLE
                             )
 
-                            Spacer(Modifier.height(16.dp))
+                            Spacer(Modifier.height(24.dp))
 
                             if (loginState.firebaseAuthState == FirebaseAuthState.SignedOut) {
                                 CustomButton(
@@ -217,8 +215,7 @@ fun LoginScreen(
                                         onLoginAction(LoginAction.OnSignInAnonymously)
                                     },
                                     modifier = Modifier
-                                        .size(width = 300.dp, height = 50.dp)
-                                        .padding(horizontal = 16.dp),
+                                        .padding(horizontal = 15.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = Color.White
                                     ),

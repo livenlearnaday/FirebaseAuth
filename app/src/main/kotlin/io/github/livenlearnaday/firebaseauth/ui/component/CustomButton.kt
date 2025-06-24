@@ -33,7 +33,7 @@ fun CustomButton(
     imageResource: Int? = null,
     label: String,
     textColor: Color = Color.Black.copy(alpha = 0.5f),
-    fontSize: TextUnit = 18.sp,
+    fontSize: TextUnit = 14.sp,
     showLoading: Boolean = false,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     shape: Shape = RoundedCornerShape(10.dp),
@@ -44,7 +44,7 @@ fun CustomButton(
         enabled = enableButton,
         modifier = modifier
             .fillMaxWidth()
-            .height(50.dp),
+            .height(55.dp),
         onClick = {
             onButtonClicked()
         },
