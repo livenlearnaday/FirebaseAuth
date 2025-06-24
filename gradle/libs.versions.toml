@@ -1,47 +1,39 @@
 [versions]
-
 android-compileSdk = "35"
 android-minSdk = "28"
-android-targetSdk = "34"
-
+android-targetSdk = "35"
+klint = "1.6.0" # used in app build gradle plugin section
 jvm = "21"
-
 
 activityCompose = "1.10.1"
 androidxAppcompat = "1.7.1"
-androidxComposeBom = "2025.06.00"
+androidxComposeBom = "2025.06.01"
 androidxCoreKtx = "1.16.0"
 androidxConstraintLayoutCompose = "1.1.1"
-gradle = "8.10.1"
-kotlin = "2.1.21"
-koinVersion = "4.0.2"
-koinCompose = "4.0.2"
-ksp = "2.1.21-2.0.1"
 androidxLifecycle = "2.9.1"
-coroutines = "1.10.2"
-gmsPlugin = "4.4.2"
-timberVersion = "5.0.1"
+coil = "3.2.0"
 coreSplashscreen = "1.0.1"
-voyager = "1.0.0"
+coroutines = "1.10.2"
+desugarJdkLibs = "2.1.5" # need to use this version to help with crash from Date Instant class not found (supported 26 and above)
+gmsPlugin = "4.4.2"
+gradle = "8.10.1"
+jetbrainsKotlinDateTime = "0.6.2"
+kotlin = "2.1.21"
+koinVersion = "4.1.0"
+koinCompose = "4.1.0"
+ksp = "2.1.21-2.0.2"
 navigationRuntimeKtx = "2.9.0"
 serializationKtx = "1.8.1"
-coil = "3.2.0"
+spotless = "6.25.0"
+timberVersion = "5.0.1"
 
+voyager = "1.0.0"
 
-
-# firebase
+# firebase auth
 firebase = "33.15.0"
 androidxCredentials = "1.5.0"
 googleId = "1.1.1"
 androidxCredentialsPlayServicesAuth = "1.5.0"
-
-
-
-# operation
-klint = "1.6.0" # used in app build gradle plugin section
-spotless = "6.25.0"
-desugarJdkLibs = "2.1.5" # need to use this version to help with crash from Date Instant class not found (supported 26 and above)
-jetbrainsKotlinDateTime = "0.6.2"
 
 #Test libs version
 junit = "4.13.2"
@@ -51,17 +43,11 @@ espressoCore = "3.6.1"
 truth = "1.4.2"
 
 
-
-
-
-
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidxAppcompat" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCoreKtx" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "androidxConstraintLayoutCompose" }
-
-
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeBom" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
@@ -73,31 +59,25 @@ androidx-compose-ui-graphics = { group = "androidx.compose.ui", name = "ui-graph
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
-
-
-# Dependency injection
+androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
+androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationRuntimeKtx" }
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
+coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
+coil-svg = {group= "io.coil-kt.coil3", name ="coil-svg", version.ref = "coil"}
+coil-network = {group= "io.coil-kt.coil3", name ="coil-network-ktor3", version.ref = "coil"}
+desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinVersion" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinVersion" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koinVersion" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinCompose" }
-
-
-androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
-androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
-androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidxLifecycle" }
-
-
-coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
-coil-svg = {group= "io.coil-kt.coil3", name ="coil-svg", version.ref = "coil"}
-coil-network = {group= "io.coil-kt.coil3", name ="coil-network-ktor3", version.ref = "coil"}
-
-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
-
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timberVersion" }
 
-
+# jetbrains
+coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "jetbrainsKotlinDateTime"}
-
+ktx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationKtx" }
 
 # Voyager
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
@@ -105,19 +85,12 @@ voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", vers
 voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 
-# andriodx navigation
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationRuntimeKtx" }
-androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
-ktx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationKtx" }
-
 # firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
 googleid-identity = { module = "com.google.android.libraries.identity.googleid:googleid", version.ref = "googleId" }
 androidx-credentials = { module = "androidx.credentials:credentials", version.ref = "androidxCredentials" }
 androidx-credentials-play-services-auth = { group = "androidx.credentials", name = "credentials-play-services-auth", version.ref = "androidxCredentialsPlayServicesAuth" }
-
-desugar-jdk-libs = { module = "com.android.tools:desugar_jdk_libs", version.ref = "desugarJdkLibs" }
 
 #Test libs
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -127,7 +100,6 @@ androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 coroutinesTest = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
-
 # part of compose bom
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
@@ -204,7 +176,6 @@ coil = [
 
 
 [plugins]
-
 application-android = { id = "com.android.application", version.ref = "gradle" }
 org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
