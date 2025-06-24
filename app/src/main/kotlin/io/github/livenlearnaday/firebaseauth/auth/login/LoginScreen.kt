@@ -70,31 +70,6 @@ fun LoginScreen(
         }
     }
 
-    /*val launcherSignIn =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                onLoginAction(LoginAction.OnSignInWithGoogle(result.data))
-            } else {
-                if (result.resultCode == Activity.RESULT_CANCELED) {
-                    Timber.e("LoginScreen, launcherSignIn OneTapSignInWithGoogle Cancelled")
-                }
-                onLoginAction(LoginAction.OnResetScreen)
-            }
-        }
-
-    fun launch(signInResult: BeginSignInResult) {
-        val intent = IntentSenderRequest.Builder(signInResult.pendingIntent.intentSender).build()
-        launcherSignIn.launch(intent)
-    }*/
-
-/*
-    LaunchedEffect(loginState.beginSignInResult) {
-        if (loginState.beginSignInResult != null) {
-            launch(loginState.beginSignInResult)
-        }
-    }
-*/
-
     Scaffold(
         containerColor = Color.LightGray,
         content = { innerPadding ->

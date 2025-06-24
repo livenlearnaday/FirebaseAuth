@@ -135,7 +135,7 @@ dependencies {
     implementation(libs.googleid.identity)
 
     // navigation
-    implementation(libs.bundles.voyager)
+    implementation(libs.bundles.navigation)
 
     implementation(libs.androidx.core.splashscreen)
 

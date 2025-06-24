@@ -32,7 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.navigator.currentOrThrow
 import io.github.livenlearnaday.firebaseauth.R
 import io.github.livenlearnaday.firebaseauth.ui.component.CustomButton
 import io.github.livenlearnaday.firebaseauth.ui.component.EmailTextField
@@ -47,7 +46,7 @@ fun ResetPasswordScreen(
     onBackPressed: () -> Unit,
     onResetPasswordSuccess: (message: String) -> Unit
 ) {
-    val keyboard = LocalSoftwareKeyboardController.currentOrThrow
+    val keyboard = LocalSoftwareKeyboardController.current
 
     LaunchedEffect(key1 = resetPasswordState.isResetPasswordSuccess) {
         if (resetPasswordState.isResetPasswordSuccess && resetPasswordState.message.isNotBlank()) {
@@ -113,7 +112,7 @@ fun ResetPasswordScreen(
                 ),
                 label = stringResource(R.string.reset),
                 onButtonClicked = {
-                    keyboard.hide()
+                    keyboard?.hide()
                     onResetPasswordAction(ResetPasswordAction.OnPasswordResetClicked)
                 },
                 showLoading = resetPasswordState.isLoading

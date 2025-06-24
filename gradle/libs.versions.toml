@@ -7,7 +7,7 @@ jvm = "21"
 
 activityCompose = "1.10.1"
 androidxAppcompat = "1.7.1"
-androidxComposeBom = "2025.06.01"
+androidxComposeBom = "2025.06.00"
 androidxCoreKtx = "1.16.0"
 androidxConstraintLayoutCompose = "1.1.1"
 androidxLifecycle = "2.9.1"
@@ -26,8 +26,6 @@ navigationRuntimeKtx = "2.9.0"
 serializationKtx = "1.8.1"
 spotless = "6.25.0"
 timberVersion = "5.0.1"
-
-voyager = "1.0.0"
 
 # firebase auth
 firebase = "33.15.0"
@@ -79,12 +77,6 @@ coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "jetbrainsKotlinDateTime"}
 ktx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationKtx" }
 
-# Voyager
-voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
-voyager-screenModel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
-voyager-koin = { module = "cafe.adriel.voyager:voyager-koin", version.ref = "voyager" }
-voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
-
 # firebase
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth" }
@@ -130,18 +122,9 @@ koin-compose = [
     "koin-androidx-compose",
 ]
 
-
-voyager = [
-    "voyager-navigator",
-    "voyager-screenModel",
-    "voyager-koin",
-    "voyager-transitions"
-]
-
 navigation = [
     "androidx-navigation-compose",
-    "androidx-navigation-runtime-ktx",
-    "ktx-serialization-json"
+    "androidx-navigation-runtime-ktx"
 ]
 
 test-impl = [
