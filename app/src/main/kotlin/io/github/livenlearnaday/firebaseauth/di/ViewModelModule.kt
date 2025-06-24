@@ -1,7 +1,9 @@
 package io.github.livenlearnaday.firebaseauth.di
 
-import io.github.livenlearnaday.firebaseauth.auth.AuthViewModel
+import io.github.livenlearnaday.firebaseauth.MainViewModel
+import io.github.livenlearnaday.firebaseauth.auth.login.LoginViewModel
 import io.github.livenlearnaday.firebaseauth.auth.reset.ResetPasswordViewModel
+import io.github.livenlearnaday.firebaseauth.home.HomeViewModel
 import io.github.livenlearnaday.firebaseauth.usecase.AnonymousSignInUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.DeleteUserAccountUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.FetchCredentialUseCase
@@ -18,18 +20,31 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
 
-    viewModel<AuthViewModel> {
-        AuthViewModel(
+    viewModel<MainViewModel> {
+        MainViewModel(
+            get<GetAuthStateUseCase>()
+        )
+    }
+
+    viewModel<LoginViewModel> {
+        LoginViewModel(
             get<CoroutineDispatcherProvider>(),
             get<GetAuthStateUseCase>(),
             get<AnonymousSignInUseCase>(),
             get<GoogleSignInUseCase>(),
-            get<ReAuthenticationCheckUseCase>(),
-            get<SignOutUseCase>(),
-            get<DeleteUserAccountUseCase>(),
             get<SignUpWithEmailAndPasswordUseCase>(),
             get<LogInWithEmailAndPasswordUseCase>(),
             get<FetchCredentialUseCase>()
+        )
+    }
+
+    viewModel<HomeViewModel> {
+        HomeViewModel(
+            get<CoroutineDispatcherProvider>(),
+            get<GetAuthStateUseCase>(),
+            get<ReAuthenticationCheckUseCase>(),
+            get<SignOutUseCase>(),
+            get<DeleteUserAccountUseCase>()
         )
     }
 

@@ -21,6 +21,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.imp.ReAuthenticationCheckUs
 import io.github.livenlearnaday.firebaseauth.usecase.imp.ResetPasswordUseCaseImp
 import io.github.livenlearnaday.firebaseauth.usecase.imp.SignOutUseCaseImp
 import io.github.livenlearnaday.firebaseauth.usecase.imp.SignUpWithEmailAndPasswordUseCaseImp
+import io.github.livenlearnaday.firebaseauth.util.CoroutineDispatcherProvider
 import org.koin.dsl.module
 
 val useCaseModule = module {
@@ -30,7 +31,9 @@ val useCaseModule = module {
     }
 
     factory<GoogleSignInUseCase> {
-        GoogleSignInUseCaseImp(get<AuthRepository>())
+        GoogleSignInUseCaseImp(
+            get<AuthRepository>()
+        )
     }
 
     factory<GetAuthStateUseCase> {
@@ -46,7 +49,11 @@ val useCaseModule = module {
     }
 
     factory<DeleteUserAccountUseCase> {
-        DeleteUserAccountUseCaseImp(get<AuthRepository>())
+        DeleteUserAccountUseCaseImp(
+            get<AuthRepository>(),
+            get<CoroutineDispatcherProvider>()
+
+        )
     }
 
     factory<ResetPasswordUseCase> {
@@ -62,6 +69,8 @@ val useCaseModule = module {
     }
 
     factory<FetchCredentialUseCase> {
-        FetchCredentialUseCaseImp(get<AuthRepository>())
+        FetchCredentialUseCaseImp(
+            get<AuthRepository>()
+        )
     }
 }

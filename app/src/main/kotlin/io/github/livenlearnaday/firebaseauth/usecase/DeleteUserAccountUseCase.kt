@@ -1,8 +1,8 @@
 package io.github.livenlearnaday.firebaseauth.usecase
 
-import androidx.credentials.Credential
+import android.content.Context
 import io.github.livenlearnaday.firebaseauth.util.Response
 
 fun interface DeleteUserAccountUseCase {
-    suspend fun execute(credential: Credential?): Response<Boolean>
+    suspend fun execute(context: Context, needReAuth: Boolean): Response<Boolean>
 }
