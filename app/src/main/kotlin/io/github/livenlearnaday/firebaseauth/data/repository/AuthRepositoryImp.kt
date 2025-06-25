@@ -17,11 +17,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 import io.github.livenlearnaday.firebaseauth.data.model.AuthRequestModel
 import io.github.livenlearnaday.firebaseauth.util.Response
 import io.github.livenlearnaday.firebaseauth.util.isWithinPast
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.tasks.await
 import timber.log.Timber
 
@@ -39,7 +36,7 @@ class AuthRepositoryImp(
     override val currentUser: FirebaseUser?
         get() = auth.currentUser
 
-    override fun getAuthState(scope: CoroutineScope) = callbackFlow {
+    override fun getAuthState() = callbackFlow {
         val authStateListener = FirebaseAuth.AuthStateListener { auth ->
             trySend(auth.currentUser)
             Timber.d("$TAG getAuthState User: ${auth.currentUser?.uid ?: "Not authenticated"}")
@@ -48,7 +45,7 @@ class AuthRepositoryImp(
         awaitClose {
             auth.removeAuthStateListener(authStateListener)
         }
-    }.stateIn(scope, SharingStarted.WhileSubscribed(), auth.currentUser)
+    }
 
     override suspend fun signInAnonymously(): Response<AuthResult> = try {
         val authResult = auth.signInAnonymously().await()

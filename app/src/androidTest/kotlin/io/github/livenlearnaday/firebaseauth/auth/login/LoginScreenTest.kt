@@ -1,4 +1,4 @@
-package io.github.livenlearnaday.firebaseauth
+package io.github.livenlearnaday.firebaseauth.auth.login
 
 import androidx.compose.ui.test.isDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -6,8 +6,6 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
-import io.github.livenlearnaday.firebaseauth.auth.login.LoginScreen
-import io.github.livenlearnaday.firebaseauth.auth.login.LoginState
 import java.util.UUID
 import org.junit.Rule
 import org.junit.Test

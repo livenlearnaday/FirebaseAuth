@@ -10,11 +10,14 @@ import io.github.livenlearnaday.firebaseauth.MainViewModel
 import io.github.livenlearnaday.firebaseauth.data.enum.FirebaseAuthState
 import io.github.livenlearnaday.firebaseauth.usecase.DeleteUserAccountUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.GetAuthStateUseCase
+import io.github.livenlearnaday.firebaseauth.usecase.GetCurrentFirebaseUserUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.ReAuthenticationCheckUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.SignOutUseCase
 import io.github.livenlearnaday.firebaseauth.util.CoroutineDispatcherProvider
 import io.github.livenlearnaday.firebaseauth.util.Response
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -24,7 +27,8 @@ class HomeViewModel(
     private val getAuthStateUseCase: GetAuthStateUseCase,
     private val reAuthenticationCheckUseCase: ReAuthenticationCheckUseCase,
     private val signOutUseCase: SignOutUseCase,
-    private val deleteUserAccountUseCase: DeleteUserAccountUseCase
+    private val deleteUserAccountUseCase: DeleteUserAccountUseCase,
+    private val getCurrentFirebaseUserUseCase: GetCurrentFirebaseUserUseCase
 ) : ViewModel() {
 
     companion object {
@@ -88,7 +92,7 @@ class HomeViewModel(
     }
 
     private fun updateAuthState() {
-        val response = getAuthStateUseCase.execute(viewModelScope)
+        val response = getAuthStateUseCase.execute().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), getCurrentFirebaseUserUseCase.execute())
 
         homeState = homeState.copy(
             currentUser = response.value,

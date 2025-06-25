@@ -6,14 +6,13 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import io.github.livenlearnaday.firebaseauth.data.model.AuthRequestModel
 import io.github.livenlearnaday.firebaseauth.util.Response
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
 
     val currentUser: FirebaseUser?
 
-    fun getAuthState(scope: CoroutineScope): StateFlow<FirebaseUser?>
+    fun getAuthState(): Flow<FirebaseUser?>
 
     suspend fun signInAnonymously(): Response<AuthResult>
 
