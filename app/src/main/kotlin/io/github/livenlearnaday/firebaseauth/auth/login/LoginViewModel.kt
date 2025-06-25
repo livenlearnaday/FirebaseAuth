@@ -13,6 +13,7 @@ import io.github.livenlearnaday.firebaseauth.data.model.AuthRequestModel
 import io.github.livenlearnaday.firebaseauth.usecase.AnonymousSignInUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.FetchCredentialUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.GetAuthStateUseCase
+import io.github.livenlearnaday.firebaseauth.usecase.GetCurrentFirebaseUserUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.GoogleSignInUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.LogInWithEmailAndPasswordUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.SignUpWithEmailAndPasswordUseCase
@@ -20,6 +21,8 @@ import io.github.livenlearnaday.firebaseauth.util.CoroutineDispatcherProvider
 import io.github.livenlearnaday.firebaseauth.util.Response
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -31,7 +34,8 @@ class LoginViewModel(
     private val googleSignInUseCase: GoogleSignInUseCase,
     private val signUpWithEmailAndPasswordUseCase: SignUpWithEmailAndPasswordUseCase,
     private val logInWithEmailAndPasswordUseCase: LogInWithEmailAndPasswordUseCase,
-    private val fetchCredentialUseCase: FetchCredentialUseCase
+    private val fetchCredentialUseCase: FetchCredentialUseCase,
+    private val getCurrentFirebaseUserUseCase: GetCurrentFirebaseUserUseCase
 ) : ViewModel() {
 
     companion object {
@@ -64,14 +68,16 @@ class LoginViewModel(
         when (loginAction) {
             LoginAction.OnSignInAnonymously -> {
                 loginState = loginState.copy(
-                    authType = AuthType.ANONYMOUS
+                    authType = AuthType.ANONYMOUS,
+                    isLoading = true
                 )
                 signInAnonymously()
             }
 
             is LoginAction.OnClickGoogleSignIn -> {
                 loginState = loginState.copy(
-                    authType = AuthType.GOOGLE
+                    authType = AuthType.GOOGLE,
+                    isLoading = true
                 )
                 fetchCredentials(loginAction.context)
             }
@@ -81,6 +87,11 @@ class LoginViewModel(
                     email = loginState.email.text.toString().trim(),
                     password = loginState.password.text.toString()
                 )
+                loginState = loginState.copy(
+                    authType = loginState.authType,
+                    isLoading = true
+                )
+
                 when (loginState.authType) {
                     AuthType.SIGNUP -> {
                         signUpWithEmailAndPassword(authRequestModel)
@@ -113,7 +124,7 @@ class LoginViewModel(
     }
 
     private fun updateAuthState() {
-        val response = getAuthStateUseCase.execute(viewModelScope)
+        val response = getAuthStateUseCase.execute().stateIn(viewModelScope, SharingStarted.WhileSubscribed(), getCurrentFirebaseUserUseCase.execute())
         loginState = loginState.copy(
             currentUser = response.value,
             firebaseAuthState = response.value?.let { firebaseUser ->
@@ -124,9 +135,6 @@ class LoginViewModel(
     }
 
     private fun signUpWithEmailAndPassword(authRequestModel: AuthRequestModel) = viewModelScope.launch(defaultExceptionHandler) {
-        loginState = loginState.copy(
-            isLoading = true
-        )
         withContext(coroutineDispatcherProvider.io()) {
             when (
                 val response =
@@ -144,7 +152,8 @@ class LoginViewModel(
 
                     loginState = loginState.copy(
                         isLogInSuccess = true,
-                        isLoggedIn = true
+                        isLoggedIn = true,
+                        isLoading = false
                     )
                 }
 
@@ -163,9 +172,6 @@ class LoginViewModel(
     }
 
     private fun logInWithEmailAndPassword(authRequestModel: AuthRequestModel) = viewModelScope.launch(defaultExceptionHandler) {
-        loginState = loginState.copy(
-            isLoading = true
-        )
         withContext(coroutineDispatcherProvider.io()) {
             when (val response = logInWithEmailAndPasswordUseCase.execute(authRequestModel)) {
                 is Response.Loading -> {
@@ -179,7 +185,8 @@ class LoginViewModel(
                     Timber.d("$TAG  logInWithEmailAndPassword Success: $authResult")
                     loginState = loginState.copy(
                         isLogInSuccess = true,
-                        isLoggedIn = true
+                        isLoggedIn = true,
+                        isLoading = false
                     )
                 }
 
@@ -211,7 +218,8 @@ class LoginViewModel(
                     updateAuthState()
                     loginState = loginState.copy(
                         isLogInSuccess = true,
-                        isLoggedIn = true
+                        isLoggedIn = true,
+                        isLoading = false
                     )
                 }
 
@@ -231,9 +239,6 @@ class LoginViewModel(
 
     private fun fetchCredentials(context: Context) {
         viewModelScope.launch(defaultExceptionHandler) {
-            loginState = loginState.copy(
-                isLoading = true
-            )
             withContext(coroutineDispatcherProvider.io()) {
                 when (val response = fetchCredentialUseCase.execute(context)) {
                     is Response.Loading -> {

@@ -5,6 +5,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.AnonymousSignInUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.DeleteUserAccountUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.FetchCredentialUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.GetAuthStateUseCase
+import io.github.livenlearnaday.firebaseauth.usecase.GetCurrentFirebaseUserUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.GoogleSignInUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.LogInWithEmailAndPasswordUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.ReAuthenticationCheckUseCase
@@ -15,6 +16,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.imp.AnonymousSignInUseCaseI
 import io.github.livenlearnaday.firebaseauth.usecase.imp.DeleteUserAccountUseCaseImp
 import io.github.livenlearnaday.firebaseauth.usecase.imp.FetchCredentialUseCaseImp
 import io.github.livenlearnaday.firebaseauth.usecase.imp.GetAuthStateUseCaseImp
+import io.github.livenlearnaday.firebaseauth.usecase.imp.GetCurrentFirebaseUserUseCaseImp
 import io.github.livenlearnaday.firebaseauth.usecase.imp.GoogleSignInUseCaseImp
 import io.github.livenlearnaday.firebaseauth.usecase.imp.LogInWithEmailAndPasswordUseCaseImp
 import io.github.livenlearnaday.firebaseauth.usecase.imp.ReAuthenticationCheckUseCaseImp
@@ -38,6 +40,10 @@ val useCaseModule = module {
 
     factory<GetAuthStateUseCase> {
         GetAuthStateUseCaseImp(get<AuthRepository>())
+    }
+
+    factory<GetCurrentFirebaseUserUseCase> {
+        GetCurrentFirebaseUserUseCaseImp(get<AuthRepository>())
     }
 
     factory<ReAuthenticationCheckUseCase> {

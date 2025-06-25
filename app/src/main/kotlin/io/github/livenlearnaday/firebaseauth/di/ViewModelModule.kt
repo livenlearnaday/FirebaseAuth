@@ -8,6 +8,7 @@ import io.github.livenlearnaday.firebaseauth.usecase.AnonymousSignInUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.DeleteUserAccountUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.FetchCredentialUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.GetAuthStateUseCase
+import io.github.livenlearnaday.firebaseauth.usecase.GetCurrentFirebaseUserUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.GoogleSignInUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.LogInWithEmailAndPasswordUseCase
 import io.github.livenlearnaday.firebaseauth.usecase.ReAuthenticationCheckUseCase
@@ -22,7 +23,8 @@ val viewModelModule = module {
 
     viewModel<MainViewModel> {
         MainViewModel(
-            get<GetAuthStateUseCase>()
+            get<GetAuthStateUseCase>(),
+            get<GetCurrentFirebaseUserUseCase>()
         )
     }
 
@@ -34,7 +36,8 @@ val viewModelModule = module {
             get<GoogleSignInUseCase>(),
             get<SignUpWithEmailAndPasswordUseCase>(),
             get<LogInWithEmailAndPasswordUseCase>(),
-            get<FetchCredentialUseCase>()
+            get<FetchCredentialUseCase>(),
+            get<GetCurrentFirebaseUserUseCase>()
         )
     }
 
@@ -44,7 +47,8 @@ val viewModelModule = module {
             get<GetAuthStateUseCase>(),
             get<ReAuthenticationCheckUseCase>(),
             get<SignOutUseCase>(),
-            get<DeleteUserAccountUseCase>()
+            get<DeleteUserAccountUseCase>(),
+            get<GetCurrentFirebaseUserUseCase>()
         )
     }
 

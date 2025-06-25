@@ -1,4 +1,4 @@
-package io.github.livenlearnaday.firebaseauth
+package io.github.livenlearnaday.firebaseauth.home
 
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithContentDescription
@@ -6,8 +6,6 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.core.net.toUri
 import com.google.firebase.auth.FirebaseUser
 import io.github.livenlearnaday.firebaseauth.data.enum.FirebaseAuthState
-import io.github.livenlearnaday.firebaseauth.home.HomeScreen
-import io.github.livenlearnaday.firebaseauth.home.HomeState
 import io.mockk.every
 import io.mockk.mockk
 import org.junit.Rule
@@ -24,8 +22,6 @@ class HomeScreenTest {
     @Test
     fun should_show_home_contents() {
         // Arrange
-//        mockkStatic(FirebaseAuth::class)
-//        every { FirebaseAuth.getInstance() } returns mockk(relaxed = true)
         every { mockUser.email } returns email
         every { mockUser.displayName } returns name
         every { mockUser.photoUrl } returns "http://random.com".toUri()
